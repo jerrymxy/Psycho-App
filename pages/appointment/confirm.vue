@@ -8,21 +8,21 @@
 				<text class="body">{{location}}</text>
 			</uni-section>
 		</uni-card>
-		<button class="btn-submit" type="primary" @click="submit">提交预约</button>
+		<button class="btn-submit" type="primary" :loading="loading" @click="submit">提交预约</button>
 		<button class="btn-submit" type="default" @click="navigateBack">我再想想</button>
 	</view>
 </template>
 
 <script>
 	import request from "@/utils/request.js";
-	
+
 	function getSurvey() {
 		return request({
 			url: "/appoint/getSurvey",
 			method: "GET",
 		});
 	}
-	
+
 	export default {
 		data() {
 			return {
@@ -34,15 +34,17 @@
 				date: "2023-01-01",
 				startTime: "8:00",
 				endTime: "9:00",
-				location: "燕园校区新太阳学生中心313室"
+				location: "燕园校区新太阳学生中心313室",
+				loading: false
 			}
 		},
 		methods: {
 			navigateBack() {
 				uni.navigateBack();
 			},
-			submit() {
+			submit(e) {
 				// Todo
+				this.loading = true;
 				getSurvey().then(res => {
 					if (res.required) {
 						uni.navigateTo({
@@ -50,14 +52,19 @@
 						});
 					} else {
 						// 解决异步问题
-						new request({
+						const req = request({
 							url: "/appoint/submit",
 							method: "POST",
-							param: {
+							data: {
 								uid: this.uid,
 								date: this.date,
 								timeId: this.tid
 							}
+						});
+						req.then(res => {
+							// uni.redirectTo({
+							// 	url: "/pages/appointment/history"
+							// });
 						});
 					}
 				});
@@ -85,7 +92,7 @@
 					icon: "error"
 				});
 			}
-			
+
 		},
 	}
 </script>
@@ -94,7 +101,7 @@
 	.body {
 		margin-left: 20px;
 	}
-	
+
 	.btn-submit {
 		margin: 20px;
 	}

@@ -67,31 +67,7 @@
 							availability: false
 						}],
 					},
-					{
-						uid: 2,
-						name: "bbb",
-						introduction: "擅长情绪困扰、人际关系、职业生涯等议题",
-						timeRange: [{
-							range: "8-9",
-							availability: true
-						}, {
-							range: "9-10",
-							availability: false
-						}, {
-							range: "8-9",
-							availability: true
-						}, {
-							range: "9-10",
-							availability: false
-						}, {
-							range: "8-9",
-							availability: true
-						}, {
-							range: "9-10",
-							availability: false
-						}],
 
-					},
 				]
 			}
 		},

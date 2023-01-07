@@ -7,7 +7,9 @@
 			<uni-datetime-picker v-model="range" type="daterange" @change="change" @maskClick="maskClick" />
 		</view>
 		<view v-for="(item, index) in list" :key="item.aid">
-			<uni-card :title="item.name" :isFull="false" :is-shadow="false">
+			<uni-card :isFull="false" :is-shadow="false">
+				<uni-title type="h4" title="咨询师"></uni-title>
+				<text>{{item.name}}</text>
 				<uni-title type="h4" title="预约日期"></uni-title>
 				<text>{{item.date}} {{item.startTime}}-{{item.endTime}}</text>
 				<uni-title type="h4" title="咨询地点"></uni-title>
@@ -40,7 +42,7 @@
 		return request({
 			url: "/appoint/cancel",
 			method: "POST",
-			param: {
+			data: {
 				aid: aid
 			}
 		});

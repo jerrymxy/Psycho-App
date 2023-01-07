@@ -192,32 +192,6 @@ switch.radius .uni-switch-input::before {
 	border-radius: 10upx;
 }
 
-
-
-radio.radio[checked]::after,
-radio.radio .uni-radio-input-checked::after {
-	content: "";
-	background-color: transparent;
-	display: block;
-	position: absolute;
-	width: 8px;
-	height: 8px;
-	z-index: 999;
-	top: 0upx;
-	left: 0upx;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	border-radius: 200upx;
-	/* #ifndef MP */
-	border: 7px solid #ffffff !important;
-	/* #endif */
-
-	/* #ifdef MP */
-	border: 8px solid #ffffff !important;
-	/* #endif */
-}
-
 .switch-sex::after {
 	content: "\e71c";
 }
