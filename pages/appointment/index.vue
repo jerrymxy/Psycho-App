@@ -50,7 +50,8 @@
 									<text class="text">{{item.roomAddress}}</text>
 								</view>
 								<view class="collapse-content" style="margin: 10px;">
-									<button class="mini-btn" type="primary" size="mini" @tap="handleAppoint">预约</button>
+									<button class="mini-btn" type="primary" size="mini"
+										@tap="handleAppoint(item.scheduleId)">预约</button>
 								</view>
 							</uni-collapse-item>
 						</uni-collapse>
@@ -96,12 +97,11 @@
 			}
 		},
 		methods: {
-			handleAppoint(person, tid) {
+			handleAppoint(scheduleId) {
 				uni.navigateTo({
-					url: "./confirm?person=" + person + "&tid=" + tid,
+					url: "./confirm?scheduleId=" + scheduleId,
 
 				})
-				console.log(person, tid);
 			},
 			processConsultantTime() {
 				// let scheduleList = storage.get("schedules");
@@ -141,10 +141,12 @@
 						// console.log(res.data.schedules);
 						this.scheduleList = res.data.schedules;
 						// storage.set("schedules", res.data.schedules);
-						uni.setStorageSync("schedules", res.data.schedules)
+						uni.setStorageSync("schedules", res.data.schedules);
+						uni.setStorageSync("consultants", res.data.consultants);
 						this.consultantList = res.data.consultants;
 						this.processConsultantTime();
 						console.log(this.consultantList);
+						console.log(this.scheduleList);
 						uni.hideLoading();
 					});
 				}
@@ -155,7 +157,6 @@
 				title: "加载中",
 			});
 			this.datePicked = parseTime(Date.now(), "{y}-{m}-{d}");
-			console.log(THEME)
 			if (options.id) {
 				query.uid = options.id
 			}
@@ -222,11 +223,12 @@
 	}
 
 	.tag {
-
-		margin-right: 5px;
+		margin-right: 3px;
+		margin-bottom: 5px;
+		display: inline-block;
 	}
 
 	.tag-view {
-		margin-bottom: 15px;
+		margin-bottom: 5px;
 	}
 </style>

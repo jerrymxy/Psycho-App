@@ -1,11 +1,14 @@
 <template>
 	<view>
-		<uni-card :title="name" :isFull="true" :sub-title="introduction" :thumbnail="avatar">
+		<uni-card :title="person.name" :isFull="true" :sub-title="person.introduction">
 			<uni-section class="mb-10" title="预约时间" type="line">
-				<text class="body">{{date}} {{startTime}} - {{endTime}}</text>
+				<text class="body">{{schedule.date}} {{schedule.startTime}} - {{schedule.endTime}}</text>
+			</uni-section>
+			<uni-section class="mb-10" title="咨询室" type="line">
+				<text class="body">{{schedule.roomName}}</text>
 			</uni-section>
 			<uni-section class="mb-10" title="咨询地点" type="line">
-				<text class="body">{{location}}</text>
+				<text class="body">{{schedule.roomAddress}}</text>
 			</uni-section>
 		</uni-card>
 		<button class="btn-submit" type="primary" :loading="loading" @click="submit">提交预约</button>
@@ -26,15 +29,19 @@
 	export default {
 		data() {
 			return {
-				uid: 1,
-				avatar: "",
-				name: "xxx",
-				introduction: "xxx",
-				tid: 1,
-				date: "2023-01-01",
-				startTime: "8:00",
-				endTime: "9:00",
-				location: "燕园校区新太阳学生中心313室",
+				person: {
+					id: "",
+					name: "",
+					introduction: ""
+				},
+				schedule: {
+					scheduleId: "",
+					date: "",
+					startTime: "",
+					endTime: "",
+					roomName: "",
+					roomAddress: ""
+				},
 				loading: false
 			}
 		},
@@ -71,18 +78,37 @@
 			}
 		},
 		onLoad(options) {
-			if (options.person && options.tid) {
-				this.uid = options.person.uid;
-				this.avatar = options.person.avatar;
-				this.name = options.person.name;
-				this.introduction = options.person.introduction;
-				for (let item in options.person.timeRange) {
-					if (item.tid === options.tid) {
-						this.tid = options.tid;
-						this.date = item.date;
-						this.startTime = item.startTime;
-						this.endTime = item.endTime;
-						this.location = item.location;
+			// if (options.person && options.tid) {
+			// 	this.uid = options.person.uid;
+			// 	this.avatar = options.person.avatar;
+			// 	this.name = options.person.name;
+			// 	this.introduction = options.person.introduction;
+			// 	for (let item in options.person.timeRange) {
+			// 		if (item.tid === options.tid) {
+			// 			this.tid = options.tid;
+			// 			this.date = item.date;
+			// 			this.startTime = item.startTime;
+			// 			this.endTime = item.endTime;
+			// 			this.location = item.location;
+			// 			break;
+			// 		}
+			// 	}\
+			console.log(options.scheduleId);
+			if (options.scheduleId) {
+				let schedules = uni.getStorageSync("schedules");
+				let scheduleId = parseInt(options.scheduleId);
+				for (let item of schedules) {
+					console.log(item.scheduleId);
+					if (scheduleId === item.scheduleId) {
+						this.schedule = item;
+						
+						let consultants = uni.getStorageSync("consultants");
+						for (let person of consultants) {
+							if (item.consultantId === person.id) {
+								this.person = person;
+								break;
+							}
+						}
 						break;
 					}
 				}
