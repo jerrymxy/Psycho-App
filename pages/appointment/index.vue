@@ -13,16 +13,49 @@
 				<uni-datetime-picker type="date" :clear-icon="false" v-model="datePicked" returnType="string"
 					:start="Date.now()" />
 			</view>
-			<view v-for="(person, index) in list" :key="person.uid">
-				<uni-card :title="person.name" :isFull="true" :sub-title="person.introduction"
-					:thumbnail="person.avatar" :is-shadow="false">
+			<view v-for="(person, index) in mergedList" :key="person.id">
+				<uni-group :title="person.name" mode="card">
 
-					<button class="mini-btn" v-for="(item, index) in person.timeRange" :key="item.tid" type="default"
+					<!-- <button class="mini-btn" v-for="(item, index) in person.timeRange" :key="item.tid" type="default"
 						size="mini" :disabled="item.availability" @click="handleAmpt(person, item.tid)">
 						{{item.startTime}}-{{item.endTime}}
-					</button>
+					</button> -->
 
-				</uni-card>
+					<view class="tag-view">
+						<template v-for="item in person.languageIds">
+							<uni-tag class="tag" type="primary" :text="languages[item]" inverted></uni-tag>
+						</template>
+
+						<template v-for="item in person.themeIds">
+							<uni-tag class="tag" type="default" :text="themes[item]" inverted></uni-tag>
+						</template>
+					</view>
+
+					<view>
+						<text>{{person.introduction}}</text>
+					</view>
+
+					<view>
+						<uni-collapse>
+							<uni-collapse-item v-for="item in person.schedules" :key="item.scheduleId"
+								:show-animation="true" :disabled="item.appointStatus !== 0">
+								<template v-slot:title>
+									<uni-section class="mb-10" :title="item.startTime + ' - ' + item.endTime"
+										type="circle"></uni-section>
+								</template>
+								<view class="collapse-content">
+									<uni-title type="h4" title="咨询室"></uni-title>
+									<text class="text">{{item.roomName}}</text>
+									<uni-title type="h4" title="位置"></uni-title>
+									<text class="text">{{item.roomAddress}}</text>
+								</view>
+								<view class="collapse-content" style="margin: 10px;">
+									<button class="mini-btn" type="primary" size="mini" @tap="handleAppoint">预约</button>
+								</view>
+							</uni-collapse-item>
+						</uni-collapse>
+					</view>
+				</uni-group>
 			</view>
 
 		</view>
@@ -31,53 +64,66 @@
 
 <script>
 	import request from "@/utils/request.js";
+	import {
+		parseTime
+	} from "@/utils/ruoyi.js";
+	import {
+		THEME,
+		LANGUAGE
+	} from "@/utils/temp_dict.js";
+	// import storage from "@/utils/storage.js";
 
-	function getList(query) {
+	function getSingleList(query) {
 		return request({
-			url: "/appoint/getAppointList",
+			// url: "/appoint/getAppointList",
+			url: "/appoint/calendar/get-single-day",
 			method: "GET",
 			params: query
 		});
-	};
+	}
+
 
 	export default {
 		data() {
 			return {
 				notice: "公告",
-				datePicked: Date.now(),
-				list: [{
-						uid: 1,
-						name: "abc",
-						introduction: "擅长情绪困扰、人际关系、职业生涯等议题",
-						avatar: "",
-						timeRange: [{
-							tid: 0,
-							startTime: "8:00",
-							endTime: "9:00",
-							availability: true
-						}, {
-							tid: 1,
-							startTime: "9:00",
-							endTime: "10:00",
-							availability: false
-						}, {
-							tid: 2,
-							startTime: "10:00",
-							endTime: "11:00",
-							availability: false
-						}],
-					},
-
-				]
+				datePicked: "",
+				scheduleList: [],
+				consultantList: [],
+				mergedList: [],
+				themes: THEME,
+				languages: LANGUAGE
 			}
 		},
 		methods: {
-			handleAmpt(person, tid) {
+			handleAppoint(person, tid) {
 				uni.navigateTo({
 					url: "./confirm?person=" + person + "&tid=" + tid,
 
 				})
 				console.log(person, tid);
+			},
+			processConsultantTime() {
+				// let scheduleList = storage.get("schedules");
+				// console.log(scheduleList);
+				for (let person of this.consultantList) {
+					let pid = person.id;
+					let arr = [];
+					for (let item of this.scheduleList) {
+						if (item.consultantId === pid) {
+							arr.push(item);
+						}
+					}
+					let tmp = {
+						schedules: arr
+					};
+					let obj = {
+						...person,
+						...tmp
+					};
+					this.mergedList.push(obj);
+				}
+
 			},
 		},
 		watch: {
@@ -86,8 +132,19 @@
 					let query = {
 						date: newVal
 					};
-					getList(query).then(res => {
-						this.list = res;
+					let that = this;
+					getSingleList(query).then(res => {
+						// this.list = res;
+
+						// storage.set(consultants, res.consultants);
+
+						// console.log(res.data.schedules);
+						this.scheduleList = res.data.schedules;
+						// storage.set("schedules", res.data.schedules);
+						uni.setStorageSync("schedules", res.data.schedules)
+						this.consultantList = res.data.consultants;
+						this.processConsultantTime();
+						console.log(this.consultantList);
 						uni.hideLoading();
 					});
 				}
@@ -97,14 +154,12 @@
 			uni.showLoading({
 				title: "加载中",
 			});
-			let query = {};
+			this.datePicked = parseTime(Date.now(), "{y}-{m}-{d}");
+			console.log(THEME)
 			if (options.id) {
 				query.uid = options.id
 			}
-			getList(query).then(res => {
-				this.list = res;
-				uni.hideLoading();
-			});
+
 		}
 	}
 </script>
@@ -129,7 +184,12 @@
 
 	.text {
 		text-align: center;
-		font-size: 20rpx;
+		// font-size: 20rpx;
+		// margin-left: 20px;
+	}
+
+	.collapse-content {
+		margin-left: 10px;
 	}
 
 	.content {
@@ -153,11 +213,20 @@
 	}
 
 	.date-picker {
-		margin: 10px;
+		margin: 9px;
 	}
 
 	.mini-btn {
 		margin-right: 5px;
 		width: fit-content;
+	}
+
+	.tag {
+
+		margin-right: 5px;
+	}
+
+	.tag-view {
+		margin-bottom: 15px;
 	}
 </style>
