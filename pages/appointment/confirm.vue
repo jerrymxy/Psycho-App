@@ -11,7 +11,7 @@
 				<text class="body">{{schedule.roomAddress}}</text>
 			</uni-section>
 		</uni-card>
-		<button class="btn-submit" type="primary" :loading="loading" @click="submit">提交预约</button>
+		<button class="btn-submit" type="primary" :loading="loading" :disabled="disabled" @click="submit">提交预约</button>
 		<button class="btn-submit" type="default" @click="navigateBack">我再想想</button>
 	</view>
 </template>
@@ -42,7 +42,8 @@
 					roomName: "",
 					roomAddress: ""
 				},
-				loading: false
+				loading: false,
+				disabled: false
 			}
 		},
 		methods: {
@@ -117,6 +118,7 @@
 					title: "无参数，请重试",
 					icon: "error"
 				});
+				this.disabled = true;
 			}
 
 		},
