@@ -26,17 +26,7 @@
 		data() {
 			return {
 				notice: "公告占位",
-				surveyList: [{
-					sid: 1,
-					title: "2023新生普测",
-					endDate: "2023-01-15",
-					endTime: "00:00"
-				}, {
-					sid: 2,
-					title: "秋季学生心理健康问卷",
-					endDate: "2023-04-15",
-					endTime: "00:00"
-				}, ]
+				surveyList: []
 			}
 		},
 		methods: {
@@ -57,7 +47,7 @@
 			});
 			getList().then(response => {
 				this.surveyList = response;
-				console.log(response);
+				// console.log(response);
 				uni.hideLoading();
 			});
 		}

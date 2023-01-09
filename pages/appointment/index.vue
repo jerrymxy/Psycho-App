@@ -37,12 +37,12 @@
 
 					<view>
 						<uni-collapse>
-							<uni-collapse-item v-for="item in person.schedules" :key="item.id"
-								:show-animation="true" :disabled="item.appointStatus !== 0">
-								<template v-slot:title>
+							<uni-collapse-item v-for="item in person.schedules" :key="item.id" :show-animation="true"
+								:disabled="item.appointStatus !== 0" :title="item.startTime + ' - ' + item.endTime">
+								<!-- <template v-slot:title>
 									<uni-section class="mb-10" :title="item.startTime + ' - ' + item.endTime"
 										type="circle"></uni-section>
-								</template>
+								</template> -->
 								<view class="collapse-content">
 									<uni-title type="h4" title="咨询室"></uni-title>
 									<text class="text">{{item.roomName}}</text>

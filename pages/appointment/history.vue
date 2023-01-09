@@ -6,14 +6,15 @@
 		<view class="date-picker">
 			<uni-datetime-picker v-model="range" type="daterange" @change="change" @maskClick="maskClick" />
 		</view>
-		<view v-for="(item, index) in list" :key="item.aid">
+		<view v-for="(item, index) in list" :key="index">
 			<uni-card :isFull="false" :is-shadow="false">
 				<uni-title type="h4" title="咨询师"></uni-title>
-				<text>{{item.name}}</text>
-				<uni-title type="h4" title="预约日期"></uni-title>
-				<text>{{item.date}} {{item.startTime}}-{{item.endTime}}</text>
+				<text>{{item.consultantName}}</text>
+				<uni-title type="h4" title="预约时间"></uni-title>
+				<text>{{item.schedule.date}} {{item.appointTime.startTime}}-{{item.appointTime.endTime}}</text>
 				<uni-title type="h4" title="咨询地点"></uni-title>
-				<text>{{item.location}}</text>
+				<text>{{item.room.name}}</text>
+				<text>{{item.room.address}}</text>
 				<!-- 判断时间 -->
 				<view v-if="Date.parse(item.date +' ' + item.startTime) > new Date" class="cancel-btn">
 					<button type="default" size="mini" @click="handleCancel">取消预约</button>
@@ -29,12 +30,12 @@
 
 	function getHistory(startDate, endDate) {
 		return request({
-			url: "/appoint/getHistory",
+			url: "appoint/ment/my-history",
 			method: "GET",
-			param: {
-				startDate: startDate,
-				endDate: endDate
-			}
+			// param: {
+			// 	// startDate: startDate,
+			// 	// endDate: endDate
+			// }
 		});
 	};
 
@@ -86,8 +87,9 @@
 			// 设置日期
 			let curDate = new Date();
 			this.range = [curDate.setMonth((curDate.getMonth() - 1)), new Date()];
-			getHistory(this.range[0], this.range[1]).then(res => {
-				this.list = res;
+			getHistory().then(res => {
+				this.list = res.data.list;
+				
 			});
 
 		}
