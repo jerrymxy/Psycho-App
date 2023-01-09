@@ -1,7 +1,7 @@
 // 应用全局配置
 module.exports = {
   // baseUrl: 'http://localhost:8080',
-	// Todo: 切换到member接口
+	// Todo: 切换到app-api接口
   baseUrl: 'http://localhost:48080',
 	
 	// 测试用url

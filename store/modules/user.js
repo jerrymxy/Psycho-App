@@ -8,7 +8,7 @@ const baseUrl = config.baseUrl
 
 const user = {
   state: {
-    id: 0, // 用户编号
+    id: storage.get(constant.id), // 用户编号
     name: storage.get(constant.name),
     avatar: storage.get(constant.avatar),
     roles: storage.get(constant.roles),
@@ -17,7 +17,8 @@ const user = {
 
   mutations: {
     SET_ID: (state, id) => {
-      state.id = id
+      state.id = id;
+			storage.set(constant.id, id);
     },
     SET_NAME: (state, name) => {
       state.name = name
@@ -61,6 +62,7 @@ const user = {
         getInfo().then(res => {
           res = res.data; // 读取 data 数据
           const user = res.user
+					const id = (user == null || user.id === "" || user.id == null) ? 0 : user.id
           const avatar = (user == null || user.avatar === "" || user.avatar == null) ? require("@/static/images/profile.jpg") : user.avatar
           const nickname = (user == null || user.nickname === "" || user.nickname == null) ? "" : user.nickname
           if (res.roles && res.roles.length > 0) {
@@ -69,6 +71,7 @@ const user = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
+					commit('SET_ID', id)
           commit('SET_NAME', nickname)
           commit('SET_AVATAR', avatar)
           resolve(res)

@@ -79,21 +79,6 @@
 			}
 		},
 		onLoad(options) {
-			// if (options.person && options.tid) {
-			// 	this.uid = options.person.uid;
-			// 	this.avatar = options.person.avatar;
-			// 	this.name = options.person.name;
-			// 	this.introduction = options.person.introduction;
-			// 	for (let item in options.person.timeRange) {
-			// 		if (item.tid === options.tid) {
-			// 			this.tid = options.tid;
-			// 			this.date = item.date;
-			// 			this.startTime = item.startTime;
-			// 			this.endTime = item.endTime;
-			// 			this.location = item.location;
-			// 			break;
-			// 		}
-			// 	}\
 			console.log(options.scheduleId);
 			if (options.scheduleId) {
 				let schedules = uni.getStorageSync("schedules");

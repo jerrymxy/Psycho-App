@@ -31,6 +31,7 @@
 
 <script>
 	import Verify from "@/components/verifition/Verify"
+	import { getStudentInfo } from "@/api/system/user.js";
 
 	export default {
 		name: 'Login',
@@ -42,8 +43,9 @@
 				captchaEnabled: false, // 验证码开关 TODO 芋艿：需要抽到配置里
 				globalConfig: getApp().globalData.config,
 				loginForm: {
-					username: "admin",
-					password: "admin123",
+					// admin admin123
+					username: "panyunqi",
+					password: "panyunqi",
 					captchaVerification: ""
 				}
 			}
@@ -70,7 +72,7 @@
           if (this.captchaEnabled) {
             this.$refs.verify.show()
           } else { // 直接登录
-            await this.pwdLogin({})
+            await this.pwdLogin({});
           }
 				}
 			},
@@ -88,7 +90,13 @@
 			loginSuccess(result) {
 				// 设置用户信息
 				this.$store.dispatch('GetInfo').then(res => {
-					this.$tab.reLaunch('/pages/index')
+					console.log(this.$store.state.user);
+					getStudentInfo(this.$store.state.user.id).then(res => {
+						// console.log(res);
+						uni.setStorageSync("stuInfo", res.data);
+						this.$tab.reLaunch('/pages/index');
+					})
+					
 				})
 			}
 		}

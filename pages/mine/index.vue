@@ -150,7 +150,7 @@
 			handleBuilding() {
 				this.$modal.showToast('模块建设中~')
 			}
-		}
+		},
 	}
 </script>
 

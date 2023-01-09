@@ -4,7 +4,7 @@ import constant from './constant'
 let storageKey = 'storage_data'
 
 // 存储节点变量名
-let storageNodeKeys = [constant.avatar, constant.name, constant.roles, constant.permissions]
+let storageNodeKeys = [constant.id, constant.avatar, constant.name, constant.roles, constant.permissions]
 
 // 存储的数据
 let storageData = uni.getStorageSync(storageKey) || {}
