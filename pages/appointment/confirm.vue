@@ -8,12 +8,12 @@
 				<uni-section class="mb-10" title="预约时间" type="line">
 					<text class="body">{{schedule.date}} {{schedule.startTime}} - {{schedule.endTime}}</text>
 				</uni-section>
-				<!-- <uni-section class="mb-10" title="咨询室" type="line">
-					
-				</uni-section> -->
+				<uni-section class="mb-10" title="咨询室" type="line">
+					<text class="body">{{schedule.roomName}}</text>
+				</uni-section>
 				<uni-section class="mb-10" title="咨询地点" type="line">
 					<!-- <text class="body">{{schedule.roomName}}</text> -->
-					<text class="body">{{schedule.roomName}}<br>{{schedule.roomAddress}}</text>
+					<text class="body">{{schedule.roomName}}</text>
 				</uni-section>
 			</uni-group>
 
@@ -129,6 +129,7 @@
 				console.log(this.surveyQuestions);
 				console.log(this.$store.state.user.id);
 				this.sendRequest().then(res => {
+					console.log(res);
 					uni.redirectTo({
 						url: "/pages/appointment/history"
 					});
