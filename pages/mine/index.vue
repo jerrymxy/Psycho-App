@@ -18,10 +18,10 @@
 							{{ user.name }}
 						</view>
 						<view class="uid">
-							{{user.sno}}
+							{{user.stuInfo.studentId}}
 						</view>
 						<view class="extra-info">
-							{{ user.extra_info }}
+							{{user.stuInfo.deptName}}
 						</view>
 					</view>
 				</view>
@@ -65,26 +65,33 @@
 						<view>修改密码</view>
 					</view>
 				</view>
-				<view class="list-cell list-cell-arrow" @click="handleHelp">
+				<!-- <view class="list-cell list-cell-arrow" @click="handleHelp">
 					<view class="menu-item-box">
 						<view class="iconfont icon-help menu-icon"></view>
 						<view>常见问题</view>
 					</view>
-				</view>
+				</view> -->
 				<view class="list-cell list-cell-arrow" @click="handleAbout">
 					<view class="menu-item-box">
 						<view class="iconfont icon-aixin menu-icon"></view>
 						<view>关于我们</view>
 					</view>
 				</view>
-				<view class="list-cell list-cell-arrow" @click="handleToSetting">
+				<!-- <view class="list-cell list-cell-arrow" @click="handleToSetting">
 					<view class="menu-item-box">
 						<view class="iconfont icon-setting menu-icon"></view>
 						<view>应用设置</view>
 					</view>
+				</view> -->
+				<view class="list-cell list-cell-arrow" @click="handleLogout">
+					<view class="menu-item-box">
+						<view class="iconfont icon-logout menu-icon"></view>
+						<view>退出登录</view>
+					</view>
 				</view>
+				
 			</view>
-
+			
 		</view>
 	</view>
 </template>
@@ -98,8 +105,7 @@
 				// name: this.$store.state.user.name,
 				user: {
 					name: this.$store.state.user.name,
-					sno: "2100022700",
-					extra_info: "软件与微电子学院",
+					stuInfo: {}
 				},
 				version: getApp().globalData.config.appInfo.version
 			}
@@ -110,7 +116,8 @@
 			},
 			windowHeight() {
 				return uni.getSystemInfoSync().windowHeight - 50
-			}
+			},
+
 		},
 		methods: {
 			handleToInfo() {
@@ -151,6 +158,9 @@
 				this.$modal.showToast('模块建设中~')
 			}
 		},
+		onLoad() {
+			this.user.stuInfo = uni.getStorageSync("stuInfo");
+		}
 	}
 </script>
 

@@ -81,6 +81,7 @@
         this.$modal.loading("登录中，请耐心等待...")
         // 执行登录
         this.loginForm.captchaVerification = captchaParams.captchaVerification
+				// Todo: 密码目前是明文的
 				this.$store.dispatch('Login', this.loginForm).then(() => {
 					this.$modal.closeLoading()
 					this.loginSuccess()
@@ -90,7 +91,7 @@
 			loginSuccess(result) {
 				// 设置用户信息
 				this.$store.dispatch('GetInfo').then(res => {
-					console.log(this.$store.state.user);
+					// console.log(this.$store.state.user);
 					getStudentInfo(this.$store.state.user.id).then(res => {
 						// console.log(res);
 						uni.setStorageSync("stuInfo", res.data);

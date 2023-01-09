@@ -5,11 +5,11 @@
 				<uni-list-item showExtraIcon="true" :extraIcon="{type: 'person'}" title="姓名"
 					:rightText="user.nickname" />
 				<uni-list-item showExtraIcon="true" :extraIcon="{type: 'auth'}" title="学生类型"
-					:rightText="(user.posts || []).map(post => post.name).join(',')" />
+					:rightText="stuInfo.type" />
 				<uni-list-item showExtraIcon="true" :extraIcon="{type: 'staff'}" title="院系"
-					:rightText="(user.roles || []).map(role => role.name).join(',')" />
-<!-- 				<uni-list-item showExtraIcon="true" :extraIcon="{type: 'calendar'}" title="创建日期"
-					:rightText="this.parseTime(user.createTime)" /> -->
+					:rightText="stuInfo.deptName" />
+				<uni-list-item showExtraIcon="true" :extraIcon="{type: 'calendar'}" title="出生日期"
+					:rightText="stuInfo.birthday" />
 			</uni-list>
 		</uni-section>
 		<uni-section title="附加信息" type="line">
@@ -25,7 +25,7 @@
 				<button @click="navToEdit">修改信息</button>
 			</view> -->
 		</uni-section>
-		
+
 	</view>
 </template>
 
@@ -36,15 +36,17 @@
 	import {
 		parseTime
 	} from "@/utils/ruoyi"
- 
+
 	export default {
 		data() {
 			return {
-				user: {}
+				user: {},
+				stuInfo: {}
 			}
 		},
 		onLoad() {
-			this.getUser()
+			this.getUser();
+			this.stuInfo = uni.getStorageSync("stuInfo");
 		},
 		methods: {
 			getUser() {
@@ -56,7 +58,9 @@
 				return parseTime(time)
 			},
 			navToEdit() {
-				uni.navigateTo({url: './edit'});
+				uni.navigateTo({
+					url: './edit'
+				});
 			}
 		}
 	}
@@ -66,7 +70,7 @@
 	page {
 		background-color: #ffffff;
 	}
-	
+
 	.btn {
 		margin: 15px;
 	}

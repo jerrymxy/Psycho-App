@@ -35,7 +35,7 @@
 					introduction: ""
 				},
 				schedule: {
-					scheduleId: "",
+					id: "",
 					date: "",
 					startTime: "",
 					endTime: "",
@@ -84,8 +84,8 @@
 				let schedules = uni.getStorageSync("schedules");
 				let scheduleId = parseInt(options.scheduleId);
 				for (let item of schedules) {
-					console.log(item.scheduleId);
-					if (scheduleId === item.scheduleId) {
+					// console.log(item.id);
+					if (scheduleId === item.id) {
 						this.schedule = item;
 						
 						let consultants = uni.getStorageSync("consultants");
