@@ -2,7 +2,10 @@
 module.exports = {
   // baseUrl: 'http://localhost:8080',
 	// Todo: 切换到app-api接口
-  baseUrl: 'http://localhost:48080',
+  // baseUrl: 'http://localhost:48080',
+	
+	// Android Simulator 用URL
+	baseUrl: 'http://10.0.2.2:48080',
 	
 	// 测试用url
 	// baseUrl: "http://127.0.0.1:4523/m1/2022323-0-default",

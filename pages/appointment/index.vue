@@ -106,6 +106,7 @@
 			processConsultantTime() {
 				// let scheduleList = storage.get("schedules");
 				// console.log(scheduleList);
+				this.mergedList = [];
 				for (let person of this.consultantList) {
 					let pid = person.id;
 					let arr = [];
@@ -132,21 +133,16 @@
 					let query = {
 						date: newVal
 					};
-					let that = this;
 					getSingleList(query).then(res => {
-						// this.list = res;
-
-						// storage.set(consultants, res.consultants);
-
-						// console.log(res.data.schedules);
+						// console.log(res.data);
 						this.scheduleList = res.data.schedules;
 						// storage.set("schedules", res.data.schedules);
 						uni.setStorageSync("schedules", res.data.schedules);
 						uni.setStorageSync("consultants", res.data.consultants);
 						this.consultantList = res.data.consultants;
 						this.processConsultantTime();
-						console.log(this.consultantList);
-						console.log(this.scheduleList);
+						// console.log(this.consultantList);
+						// console.log(this.scheduleList);
 						uni.hideLoading();
 					});
 				}
