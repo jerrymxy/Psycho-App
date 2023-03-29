@@ -62,7 +62,7 @@
 				<view class="list-cell list-cell-arrow" @click="handleToPwd">
 					<view class="menu-item-box">
 						<view class="iconfont icon-password menu-icon"></view>
-						<view>修改密码</view>
+						<view>账户安全</view>
 					</view>
 				</view>
 				<!-- <view class="list-cell list-cell-arrow" @click="handleHelp">
@@ -71,18 +71,19 @@
 						<view>常见问题</view>
 					</view>
 				</view> -->
+				<view class="list-cell list-cell-arrow" @click="handleToSetting">
+					<view class="menu-item-box">
+						<view class="iconfont icon-setting menu-icon"></view>
+						<view>应用设置</view>
+					</view>
+				</view>
 				<view class="list-cell list-cell-arrow" @click="handleAbout">
 					<view class="menu-item-box">
 						<view class="iconfont icon-aixin menu-icon"></view>
 						<view>关于我们</view>
 					</view>
 				</view>
-				<!-- <view class="list-cell list-cell-arrow" @click="handleToSetting">
-					<view class="menu-item-box">
-						<view class="iconfont icon-setting menu-icon"></view>
-						<view>应用设置</view>
-					</view>
-				</view> -->
+				
 				<view class="list-cell list-cell-arrow" @click="handleLogout">
 					<view class="menu-item-box">
 						<view class="iconfont icon-logout menu-icon"></view>
@@ -127,7 +128,7 @@
 				this.$tab.navigateTo('/pages/mine/info/edit')
 			},
 			handleToPwd() {
-				this.$tab.navigateTo('/pages/mine/pwd/index')
+				this.$tab.navigateTo('/pages/mine/account/index')
 			},
 			handleToSetting() {
 				this.$tab.navigateTo('/pages/mine/setting/index')

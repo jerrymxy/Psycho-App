@@ -2,7 +2,7 @@
 	"pages": [{
 		"path": "pages/login",
 		"style": {
-			"navigationBarTitleText": "登录"
+			"navigationBarTitleText": ""
 		}
 	}, {
 		"path": "pages/index",
@@ -36,9 +36,9 @@
 			"navigationBarTitleText": "编辑资料"
 		}
 	}, {
-		"path": "pages/mine/pwd/index",
+		"path": "pages/mine/account/index",
 		"style": {
-			"navigationBarTitleText": "修改密码"
+			"navigationBarTitleText": "账户安全"
 		}
 	}, {
 		"path": "pages/mine/setting/index",
@@ -91,11 +91,32 @@
 			"enablePullDownRefresh": false
 		}
 
+	}, {
+		"path": "pages/appointment/history",
+		"style": {
+			"navigationBarTitleText": "预约记录",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/gestureLock",
+		"style": {
+			"navigationBarTitleText": "手势验证",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/mine/account/fingerPrint",
+		"style": {
+			"navigationBarTitleText": "指纹认证",
+			"enablePullDownRefresh": false
+		}
+
 	}    ,{
-            "path" : "pages/appointment/history",
+            "path" : "pages/mine/account/gesture",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "预约记录",
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             
@@ -132,5 +153,13 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "RuoYi",
 		"navigationBarBackgroundColor": "#FFFFFF"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
 	}
 }
