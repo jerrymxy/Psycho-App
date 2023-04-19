@@ -17,7 +17,7 @@
 			<view class="checkbox flex align-center">
 				<checkbox-group>
 					<label class="checkbox-item">
-						<checkbox value="cb" :checked="isSaveAccountName" />记住用户名
+						<checkbox value="cb" :checked="isSaveUserName" />记住用户名
 					</label>
 					<label>
 						<checkbox value="cb" />记住密码
@@ -51,6 +51,8 @@
 		getStudentInfo
 	} from "@/api/system/user.js";
 	import settings from "../utils/settings";
+	import {decrypt, encrypt} from "@/utils/jsencrypt.js";
+	import fingerPrint from "@/utils/fingerprint.js";
 
 	export default {
 		name: 'Login',
@@ -61,7 +63,8 @@
 			return {
 				captchaEnabled: false, // 验证码开关 TODO 芋艿：需要抽到配置里
 				globalConfig: getApp().globalData.config,
-				isSaveAccountName: true, // 保存用户名
+				isSaveUserName: true, // 保存用户名
+				isSavePwd: false,
 				showGesture: true, // 显示手势登录
 				showFingerPrint: true, // 显示指纹登录
 				loginForm: {
@@ -80,6 +83,12 @@
 			if (settings.get("fingerPrint")) {
 				this.showFingerPrint = true;
 			}
+			// 获取保存的用户信息
+			let accInfo = uni.getStorageSync("account");
+			if (Object.keys(accInfo).length !== 0) {
+				this.loginForm.username = accInfo["username"];
+				this.loginForm.password = decrypt(accInfo["pwd"]);
+			}
 		},
 		methods: {
 			// 隐私协议
@@ -96,7 +105,9 @@
 				this.$tab.navigateTo("./gestureLock?type=1");
 			},
 			handleFingerPrint() {
-				this.$tab.navigateTo("./gestureLock?type=1");
+				if (fingerPrint.startAuth("000000")) {
+					
+				}
 			},
 			// 登录方法
 			async handleLogin(params) {
@@ -129,9 +140,17 @@
 				// 设置用户信息
 				this.$store.dispatch('GetInfo').then(res => {
 					// console.log(this.$store.state.user);
-					if (this.isSaveAccountName) {
-						uni.setStorageSync("account", this.loginForm.username);
+					let accountData = {};
+					if (this.isSavePwd) {
+						const enpwd = encrypt(this.loginForm.password);
+						accountData["pwd"] = enpwd;
 					}
+					
+					if (this.isSaveUserName) {
+						accountData["username"] = this.loginForm.username;
+					}
+					uni.setStorageSync("account", accountData);
+					
 					getStudentInfo(this.$store.state.user.id).then(res => {
 						// console.log(res);
 						uni.setStorageSync("stuInfo", res.data);

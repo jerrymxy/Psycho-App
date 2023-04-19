@@ -85,13 +85,6 @@
 		}
 
 	}, {
-		"path": "pages/psychometry/confirm",
-		"style": {
-			"navigationBarTitleText": "知情同意书",
-			"enablePullDownRefresh": false
-		}
-
-	}, {
 		"path": "pages/appointment/history",
 		"style": {
 			"navigationBarTitleText": "预约记录",
@@ -112,16 +105,21 @@
 			"enablePullDownRefresh": false
 		}
 
-	}    ,{
-            "path" : "pages/mine/account/gesture",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	}, {
+		"path": "pages/mine/account/gesture",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/psychometry/scales",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+
+	}],
 	"tabBar": {
 		"color": "#000000",
 		"selectedColor": "#000000",

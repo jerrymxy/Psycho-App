@@ -17,7 +17,7 @@
 			<view class="uni-list">
 				<view class="uni-list-cell uni-list-cell-pd">
 					<view class="uni-list-cell-db">开启指纹登录</view>
-					<switch :checked="isFingerPrintSupported" />
+					<switch :checked="isFingerPrintEnabled" @change="switchFPChange" />
 				</view>
 			</view>
 		</uni-section>
@@ -63,6 +63,7 @@
 
 <script>
 	import settings from "@/utils/settings.js";
+	import fingerPrint from "@/utils/fingerprint.js";
 
 	export default {
 		data() {
@@ -82,26 +83,16 @@
 			}
 		},
 		onShow() {
-			this.checkFingerPrint();
+			if (this.checkFingerPrint()) {
+				this.checkFingerPrintEnabled();
+			}
 			this.checkGestureEnabled();
 
 		},
 		methods: {
 			// 测试指纹是否可用
 			checkFingerPrint() {
-				let that = this;
-				uni.checkIsSupportSoterAuthentication({
-					success(res) {
-						if (res.supportMode.includes("fingerPrint")) {
-							that.isFingerPrintSupported = true;
-							that.checkFingerPrintEnabled();
-						}
-						console.log(res);
-					},
-					fail(err) {
-						console.log(err);
-					}
-				})
+				this.isFingerPrintSupported = fingerPrint.checkIsSupport();
 			},
 			checkGestureEnabled() {
 				if (settings.get("gesture")) {
@@ -119,7 +110,19 @@
 					//手势锁认证类型（1-解锁、2、注册、3-修改）
 					this.$tab.navigateTo('/pages/gestureLock?type=2');
 				} else {
+					this.$tab.navigateTo('/pages/gestureLock?type=1');
 					settings.remove("gesture");
+				}
+			},
+			switchFPChange() {
+				if (fingerPrint.checkIsEnabled()) {
+					if (fingerPrint.startAuth()) {
+						settings.set("fingerPrint", true);
+					} else {
+						this.isFingerPrintEnabled = false;
+					}
+				} else {
+					this.isFingerPrintEnabled = false;
 				}
 			},
 			modifyPattern() {

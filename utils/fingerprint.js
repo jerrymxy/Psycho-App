@@ -10,7 +10,7 @@ const fingerPrint = {
 				}
 			},
 			fail(err) {
-				console.log(err);
+				// console.log(err);
 				return false;
 			}
 		})
@@ -20,30 +20,41 @@ const fingerPrint = {
 		uni.checkIsSoterEnrolledInDevice({
 			checkAuthMode: 'fingerPrint',
 			success(res) {
-				console.log(res);
+				// console.log(res);
 				return res.isEnrolled;
 			},
 			fail(err) {
-				console.log(err);
+				// console.log(err);
 				return false;
 			}
 		})
 	},
 	// 开始指纹识别
-	startAuth() {
+	startAuth(challengeMsg) {
 		uni.startSoterAuthentication({
 			requestAuthModes: ['fingerPrint'],
-			challenge: '000000',
+			challenge: challengeMsg || '000000',
 			authContent: '请验证指纹',
 			success(res) {
-				console.log(res);
+				// console.log(res);
+				if (res.errCode === 0) {
+					uni.showToast({
+						title: "验证成功",
+					});
+					return true;
+				} else {
+					uni.showToast({
+						title: res.errMsg,
+					});
+					return false;
+				}
 			},
 			fail(err) {
-				console.log(err);
-			},
-			complete(res) {
-				console.log(res);
+				// console.log(err);
+				return false;
 			}
 		})
 	}
 }
+
+export default fingerPrint;
