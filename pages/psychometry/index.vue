@@ -6,7 +6,7 @@
 		</uni-card>
 		<uni-list>
 			<uni-list-item v-for="(item, index) in surveyList" :key="item.planId" :title="item.planName"
-				:note="'截止时间：' + item.endTime + '\n已完成' + item.completeNum + '/' + item.scaleNum" clickable showArrow
+				:note="'截止时间：' + item.endTime + '\n已完成：' + item.completeNum + '/' + item.scaleNum" clickable showArrow
 				@click="dialogToggle(item)" />
 		</uni-list>
 
@@ -38,19 +38,21 @@
 				surveyList: [],
 				selectedInformedConsent: "",
 				selectedPlanID: 0,
+				selectedPlanName: ""
 			}
 		},
 		methods: {
 			dialogConfirm() {
 				console.log(this.selectedPlanID);
 				uni.navigateTo({
-					url: "./scales?planId=" + this.selectedPlanID,
+					url: "./scales?planId=" + this.selectedPlanID + "&planName=" + this.selectedPlanName,
 				});
 				
 			},
 			dialogToggle(item) {
 				this.selectedInformedConsent = item.informedConsent;
 				this.selectedPlanID = item.planId;
+				this.selectedPlanName = item.planName;
 				this.$refs.alertDialog.open();
 			},
 

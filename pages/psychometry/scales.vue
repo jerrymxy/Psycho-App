@@ -67,6 +67,9 @@
 				title: "加载中",
 			});
 			this.planId = options.planID;
+			uni.setNavigationBarTitle({
+				title: options.planName
+			});
 			console.log(options);
 			let query = {
 				planId: this.planId
