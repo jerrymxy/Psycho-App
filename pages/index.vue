@@ -56,15 +56,13 @@
 		<!-- </uni-card> -->
 
 		<!-- <uni-card> -->
-		<uni-group style="margin: 0 15px 15px 15px;" title="联系我们" mode="card">
+		<uni-group style="margin: 0 15px 15px 15px;" :title="notice" mode="card">
 			<!-- <uni-section class="mb-10 features" title="联系我们" type="line" padding="0 0 20px 20px"> -->
 			<text class="uni-body">
 				<dt>学生心理健康教育与咨询中心</dt>
-				<dt>北京大学新太阳学生中心4层南侧</dt>
-				<dt>联系电话：<a href="tel:010-62760852">010-62760852</a></dt>
-				<dt>电子邮箱：<a href="mailto:zixun@pku.edu.cn">zixun@pku.edu.cn</a></dt>
-				<dt>北京大学24小时心理援助热线：<a href="tel:010-62760521">010-62760521</a></dt>
-				<dt>公众号：北大学生心理健康教育与咨询中心</dt>
+				<dt>地址：xxxxxx</dt>
+				<dt>联系电话：<a href="tel:010-81111111">010-81111111</a></dt>
+				<dt>电子邮箱：<a href="mailto:aaa@example.com">aaa@example.com</a></dt>
 			</text>
 			<!-- </uni-section> -->
 		</uni-group>
@@ -115,21 +113,22 @@
 		},
 		data() {
 			return {
-				name: this.$store.state.user.name,
+				// name: this.$store.state.user.name,
+				name: "张三",
 				apmt: {
-					date: "2022-12-19 14:30",
+					date: "2023-03-01 14:30",
 					location: "A101",
 				},
 				notFirstLogin: false,
 
 				tips_icon: "/static/images/home/remind.png",
-
+				notice: "公告",
 			}
 		},
 		computed: {
 			hasApmt() {
 				// Todo: 判断是否有预约
-				return false;
+				return true;
 			}
 		}
 	}

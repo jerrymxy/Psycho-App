@@ -7,7 +7,7 @@
 					<view class="uni-list-cell-db">开启手势登录</view>
 					<switch :checked="isGestureEnabled" @change="switchGestureChange" />
 				</view>
-				<view class="list-cell list-cell-arrow" @click="modifyPattern">
+				<view v-if="isGestureEnabled" class="list-cell list-cell-arrow" @click="modifyPattern">
 					<view class="uni-list-cell-db">修改手势图案</view>
 				</view>
 			</view>
@@ -104,16 +104,19 @@
 					isFingerPrintEnabled = true;
 				}
 			},
+			// 手势开关
 			switchGestureChange: function(e) {
 				console.log('switchGesture 发生 change 事件，携带值为', e.detail.value);
 				if (e.detail.value) {
 					//手势锁认证类型（1-解锁、2、注册、3-修改）
 					this.$tab.navigateTo('/pages/gestureLock?type=2');
 				} else {
+					// 需要先验证密码或手势，才可以
 					this.$tab.navigateTo('/pages/gestureLock?type=1');
 					settings.remove("gesture");
 				}
 			},
+			// 指纹开关
 			switchFPChange() {
 				if (fingerPrint.checkIsEnabled()) {
 					if (fingerPrint.startAuth()) {

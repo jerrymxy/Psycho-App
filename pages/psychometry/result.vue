@@ -45,6 +45,17 @@
 </template>
 
 <script>
+	import request from "@/utils/request.js";
+	
+	function getList(query) {
+		return request({
+			url: "/survey/app/report",
+			method: "GET",
+			params: query
+		});
+	};
+	
+	
 	export default {
 		data() {
 			return {
@@ -67,12 +78,19 @@
 			}
 		},
 		onLoad(options) {
-			// this.planId = options.planId;
-			// this.scaleId = options.scaleId;
-			// this.planName = options.planName;
-			// this.scaleName = options.scaleName;
-			// this.submitTime = options.submitTime;
-			// this.timeSpent = options.timeSpent;
+			this.$modal.loading("加载中");
+			let query = {
+				planId: options.planId,
+				scaleId: options.scaleId
+			}
+			getList(query).then(res => {
+				this.planName = res.data.planName;
+				this.scaleName = res.data.scaleName;
+				this.submitTime = res.data.submitTime;
+				this.timeSpent = res.data.timeSpent;
+				this.factors = res.data.factors;
+			});
+			this.$modal.closeLoading();
 		},
 		methods: {
 

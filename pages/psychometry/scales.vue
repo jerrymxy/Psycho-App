@@ -15,7 +15,9 @@
 				</view>
 				<view>
 					<view class="collapse-content" style="margin: 0 15px 15px 15px;">
-						<button class="mini-btn" type="primary" size="mini" @tap="handleEnter(item)">进入测评</button>
+						
+						<button v-if="item.isComplete" class="mini-btn" type="primary" size="mini" @tap="navToResult(item)">查看结果</button>
+						<button v-else class="mini-btn" type="primary" size="mini" @tap="handleEnter(item)">进入测评</button>
 					</view>
 				</view>
 			</uni-collapse-item>
@@ -45,6 +47,9 @@
 			handleEnter(item) {
 
 			},
+			navToResult(item) {
+				this.$tab.navigateTo('./result?scaleId=' + item.scaleId + '&planId=' + item.planId);
+			}
 
 		},
 		computed: {

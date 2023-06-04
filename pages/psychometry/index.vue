@@ -34,7 +34,7 @@
 	export default {
 		data() {
 			return {
-				notice: "公告占位",
+				notice: "",
 				surveyList: [],
 				selectedInformedConsent: "",
 				selectedPlanID: 0,
@@ -61,14 +61,16 @@
 
 		},
 		onLoad() {
-			uni.showLoading({
-				title: "加载中",
-			});
+			// uni.showLoading({
+			// 	title: "加载中",
+			// });
+			this.$modal.loading("加载中");
 			// 请求测评计划
 			getList().then(response => {
 				this.surveyList = response.data;
 				// console.log(response);
-				uni.hideLoading();
+				// uni.hideLoading();
+				this.$modal.closeLoading();
 			});
 		}
 	}

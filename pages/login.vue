@@ -38,9 +38,9 @@
 		</view>
 
 		<view class="xieyi text-center">
-			<text class="text-grey1">Logging in means agreeing to the<br></text>
-			<text @click="handleUserAgrement" class="text-blue">User Agreement<br></text>
-			<text @click="handlePrivacy" class="text-blue">Privacy Agreement</text>
+			<text class="text-grey1">登录即代表同意<br></text>
+			<text @click="handleUserAgrement" class="text-blue">用户协议<br></text>
+			<text @click="handlePrivacy" class="text-blue">隐私协议</text>
 		</view>
 	</view>
 </template>
@@ -51,8 +51,8 @@
 		getStudentInfo
 	} from "@/api/system/user.js";
 	import settings from "../utils/settings";
-	import {decrypt, encrypt} from "@/utils/jsencrypt.js";
-	import fingerPrint from "@/utils/fingerprint.js";
+	import {decrypt, encrypt} from "@/utils/jsencrypt.js"; // jsencrypt加解密密码
+	import fingerPrint from "@/utils/fingerprint.js"; // 指纹
 
 	export default {
 		name: 'Login',
@@ -65,8 +65,8 @@
 				globalConfig: getApp().globalData.config,
 				isSaveUserName: true, // 保存用户名
 				isSavePwd: false,
-				showGesture: true, // 显示手势登录
-				showFingerPrint: true, // 显示指纹登录
+				showGesture: false, // 显示手势登录
+				showFingerPrint: false, // 显示指纹登录
 				loginForm: {
 					// admin admin123
 					username: "panyunqi",

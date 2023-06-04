@@ -64,7 +64,7 @@ export default {
   loading(content) {
     uni.showLoading({
       title: content,
-      icon: 'none'
+      // icon: 'none'
     })
   },
   // 关闭遮罩层
