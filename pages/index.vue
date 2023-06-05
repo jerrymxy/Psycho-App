@@ -128,7 +128,7 @@
 		computed: {
 			hasApmt() {
 				// Todo: 判断是否有预约
-				return true;
+				return false;
 			}
 		}
 	}
