@@ -45,7 +45,7 @@
 		},
 		methods: {
 			handleEnter(item) {
-
+				this.$tab.navigateTo("/pages/common/form/index?sacleId=" + item.scaleId);
 			},
 			navToResult(item) {
 				this.$tab.navigateTo('./result?scaleId=' + item.scaleId + '&planId=' + item.planId);

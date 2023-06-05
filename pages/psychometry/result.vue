@@ -30,7 +30,7 @@
 					<uni-list-item title="量表" :rightText="scaleName" />
 					<uni-list-item title="提交时间" :rightText="submitTime" />
 					<uni-list-item title="用时" :rightText="timeSpent" />
-					<uni-list-item title="答题记录" showArrow link="navigateTo" to="../common/form/index"/>
+					<uni-list-item title="答题记录" showArrow clickable @click="handleFormRes"/>
 				</uni-list>
 			</uni-section>
 			<!-- <uni-section v-if="scaleName" class="mb-10" title="量表" :sub-title="scaleName" type="circle">
@@ -93,7 +93,9 @@
 			this.$modal.closeLoading();
 		},
 		methods: {
-
+			handleFormRes() {
+				this.$tab.navigateTo("/pages/common/form/index?type=1&sacleId=" + this.scaleId);
+			}
 		}
 	}
 </script>

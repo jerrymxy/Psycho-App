@@ -99,36 +99,20 @@
 		}
 
 	}, {
-		"path": "pages/mine/account/fingerPrint",
-		"style": {
-			"navigationBarTitleText": "指纹认证",
-			"enablePullDownRefresh": false
-		}
-
-	}, {
-		"path": "pages/mine/account/gesture",
-		"style": {
-			"navigationBarTitleText": "",
-			"enablePullDownRefresh": false
-		}
-
-	}, {
 		"path": "pages/psychometry/scales",
 		"style": {
-			"navigationBarTitleText": "",
+			"navigationBarTitleText": "选择量表",
 			"enablePullDownRefresh": false
 		}
 
-	}    ,{
-            "path" : "pages/psychometry/result",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "测评结果",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	}, {
+		"path": "pages/psychometry/result",
+		"style": {
+			"navigationBarTitleText": "测评结果",
+			"enablePullDownRefresh": false
+		}
+
+	}],
 	"tabBar": {
 		"color": "#000000",
 		"selectedColor": "#000000",
